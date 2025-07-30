@@ -1,0 +1,37 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticación</title>
+     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+     <link rel="icon" type="image/x-icon" href="{% static 'assets/rent.ico' %}" />
+</head>
+<body>
+    <div class="fondoautenticacion">
+        <img src="{% static 'assets/logoauth.png' %}" alt="Logo RosarioRent" class="logo">
+        <div class="login-container">
+        
+    <form method="post" action="" class="form-auth">
+        <h2>Iniciar sesión</h2>
+        <br>
+        <br>
+        {% csrf_token %}
+        {{form.as_p}}
+        <br>
+    <div class="botonauth">
+    <button type="submit" class="btn btn-success" value="Iniciar Sesión">Iniciar Sesión</button>
+    </div>
+    <p class="textlogin">¿No tenes una cuenta? <a href="{%url 'autenticacion' %}">Registrarse</a></p>    
+    </form>
+        </div>
+        <div class="footer">
+            <p>© 2023 RosarioRent. Todos los derechos reservados.</p>
+            
+</div>
+    </div>
+
+</body>
+</html>

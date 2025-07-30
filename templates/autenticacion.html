@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticación</title>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/rent.ico' %}" />
+    
+   
+</head>
+<body>
+    <style>
+select.form-control {
+  background-color: #f0f0f0;
+  border: 2px solid #28a745;
+  border-radius: 13px;
+  padding: 8px 12px;
+  font-size: 16px;
+  color: #333;
+  outline: none;
+  width: 260px;
+  justify-content:center;
+  text-align:center;
+  margin-left: 90px;
+
+}
+
+
+</style>
+    <div class="fondoautenticacion">
+        <img src="{% static 'assets/logoauth.png' %}" alt="Logo RosarioRent" class="logo">
+        <div class="login-container">
+
+            <form method="post" action="" class="form-auth">
+                <h1>Registrarse</h1>
+                <br><br>
+                {% csrf_token %}
+                {{ form }}
+                <br>
+                <div class="botonauth">
+                    <button type="submit" class="btn btn-success" value="Iniciar Sesión">Registrarse</button>
+                </div>
+                <p class="textlogin">¿Ya tenés una cuenta? <a href="{% url 'login' %}">Iniciar sesión</a></p>
+                        <p style="text-align: center; margin-top: 20px;">
+    <a href="{% url 'home' %}" style="color: white; text-decoration: none;">Iniciar sesión como invitado</a>
+</p>
+            </form>
+                   
+        </div>
+    
+    </div>
+ 
+</body>
+</html>
