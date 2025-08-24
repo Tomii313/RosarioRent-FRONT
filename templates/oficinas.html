@@ -93,23 +93,31 @@
         {% for oficina in oficinas %}
         <div class="col-md-3 mb-4">
             <div class="card" style="width: 18rem;">
-                <div id="carouselSalon{{ oficina.id }}" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        {% for imagen in oficina.imagenes.all %}
-                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                            <img src="{{ imagen.imagen.url }}" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="Imagen del salón">
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselSalon{{ salon.id }}" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselSalon{{ salon.id }}" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Siguiente</span>
-                    </button>
-                </div>
+             <div id="carouselOficina{{ oficina.id }}" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        {% if oficina.imagenes.all %}
+            {% for imagen in oficina.imagenes.all %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ imagen.imagen.url }}" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="Imagen de la oficina">
+            </div>
+            {% endfor %}
+        {% else %}
+            <!-- Imagen por defecto si no hay ninguna cargada -->
+            <div class="carousel-item active">
+                <img src="{% static '/assets/default.jpg' %}" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="Imagen por defecto">
+            </div>
+        {% endif %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselOficina{{ oficina.id }}" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselOficina{{ oficina.id }}" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+</div>
                 <div class="card-body">
                     <h5 class="card-title">{{ oficina.nombre }}</h5>
                     <p class="card-text">${{ oficina.precio }}</p>
