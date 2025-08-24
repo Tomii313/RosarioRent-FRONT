@@ -51,7 +51,7 @@
         <div class="col-sm-3">
             <label class="form-label filtro-label">Precio Máximo</label>
             <input type="number" name="precio_max" class="form-control" placeholder="$1.000.000" min="250000" max="1000000" step="100000">
-            <label class="form-label filtro-label">Capacidad</label>
+            <label class="form-label filtro-label">Ambientes</label>
             <input type="number" name="capacidad" class="form-control" placeholder="200" min="50" max="3000" step="50">
         </div>
 
@@ -84,18 +84,18 @@
 {% if user.is_authenticated and user.tipo == 'propietario' %}
     <center>
         <br>
-        <a href="{% url 'publicar_salones' %}" class="btn btn-success">Publicar nuevo salón</a>
+        <a href="{% url 'publicar_oficina' %}" class="btn btn-success">Publicar nueva oficina</a>
     </center>
 {% endif %}
 
 <div class="container mt-5">
     <div class="row">
-        {% for salon in salones %}
+        {% for oficina in oficinas %}
         <div class="col-md-3 mb-4">
             <div class="card" style="width: 18rem;">
-                <div id="carouselSalon{{ salon.id }}" class="carousel slide" data-bs-ride="carousel">
+                <div id="carouselSalon{{ oficina.id }}" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        {% for imagen in salon.imagenes.all %}
+                        {% for imagen in oficina.imagenes.all %}
                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
                             <img src="{{ imagen.imagen.url }}" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="Imagen del salón">
                         </div>
@@ -111,9 +111,9 @@
                     </button>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ salon.nombre }}</h5>
-                    <p class="card-text">${{ salon.precio }}</p>
-                    <a href="{% url 'salones_informacion' salon.id %}" class="btn btn-primary">Ver más</a>
+                    <h5 class="card-title">{{ oficina.nombre }}</h5>
+                    <p class="card-text">${{ oficina.precio }}</p>
+                    <a href="{% url 'oficinas_informacion' oficina.id %}" class="btn btn-primary">Ver más</a>
                 </div>
             </div>
         </div>
