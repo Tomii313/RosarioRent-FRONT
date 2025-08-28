@@ -3,13 +3,62 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Publicar nuevo departamento</h2>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <label>Fotos del departamento</label>
-        <input type="file" name="imagenes" multiple class="form-control mb-3">
-        <button type="submit" class="btn btn-primary">Publicar</button>
+       <div class="d-flex flex-column align-items-center">
+        <h2>Publicar nueva oficina</h2>
+            <div class="mb-3 w-25">
+                <label>Nombre</label>
+                {{ form.nombre }}
+            </div>
+            <div class="mb-3 w-25">
+                <label>Dirección</label>
+                {{ form.ubicacion }}
+            </div>
+            <div class="mb-3 w-25">
+                <label>Precio</label>
+                {{ form.precio }}
+            </div>
+            
+            <div class="mb-3 w-25">
+                <label>Ambientes</label>
+                {{ form.ambientes }}
+            </div>
+            <div class="mb-3 w-40">
+                <label>Descripción</label>
+                {{ form.descripcion }}
+            </div>
+            <div class="mb-2 w-40 text-center">
+                <label>Fotos de la oficina </label>
+                <input type="file" name="imagenes" multiple class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Publicar</button>
+        </div>
     </form>
 </div>
+
+<style>
+body {
+    background: url('https://plus.unsplash.com/premium_photo-1681487178876-a1156952ec60?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* fondo oficina */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.container {
+    background: rgba(14, 12, 12, 0.664);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    color:white;
+}
+
+.errorlist {
+    color: red;
+    margin: 0;
+    padding: 0;
+}
+
+</style>
+
 {% endblock %}

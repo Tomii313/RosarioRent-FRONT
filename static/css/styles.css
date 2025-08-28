@@ -4178,6 +4178,8 @@ textarea.form-control-lg {
   background-clip: border-box;
   border: var(--bs-card-border-width) solid var(--bs-card-border-color);
   border-radius: var(--bs-card-border-radius);
+  min-height: 500px;
+   justify-content: space-between; /* manda el botón al fondo */
 }
 .card > hr {
   margin-right: 0;
@@ -4203,9 +4205,10 @@ textarea.form-control-lg {
 }
 
 .card-body {
-  flex: 1 1 auto;
-  padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
-  color: var(--bs-card-color);
+  flex-grow: 1; /* el contenido ocupa el espacio que queda */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-title {
@@ -5268,11 +5271,16 @@ textarea.form-control-lg {
   outline: 0;
 }
 
-.fixed-img{
+.fixed-img {
   width: 100%;
-  height: 200px;
-  object-fit:cover;
-  border-radius:8px;
+  height: 350px; /* probá este valor */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.navbar2{
+   background: linear-gradient(to right, #0a0a0a, #1c1c1c) !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
 }
 
 .modal-dialog {
@@ -5804,6 +5812,13 @@ textarea.form-control-lg {
   position: relative;
   width: 100%;
   overflow: hidden;
+  height: 200px;
+}
+.carousel-inner img{
+  height: 200px;
+  object-fit:cover;
+  min-height:200px
+
 }
 .carousel-inner::after {
   display: block;

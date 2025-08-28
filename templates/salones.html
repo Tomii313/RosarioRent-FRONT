@@ -18,32 +18,41 @@
 
 {% block content %}
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}" style="margin-left:-30px;">RosarioRent</a>
-        <br>
-        <br>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-            <i class="fas fa-bars ms-1"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}" style="color:black; margin-left: 30px;">Inicio</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:black">
-                        Alquileres
-                    </a>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar2" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars ms-1"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Inicio</a></li>
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Alquileres </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'departamentos' %}" style="color:gray;">Departamentos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'oficinas' %}" style="color:gray;">Oficinas</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'salones' %}" style="color:gray;">Salones</a></li>
-                    </ul>
+                    <li class="nav-item"><a class="nav-link" href="{%url 'departamentos'%}" style="color:gray;">Departamentos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{%url 'oficinas'%}" style="color:gray;">Oficinas</a></li>
+                     <li class="nav-item"><a class="nav-link" href="{%url 'salones'%}" style="color:gray;">Salones</a></li>
+                </ul>
                 </li>
-            </ul>
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <li class="nav-item">
+                    <button type="submit" class="nav-link btn btn-link" style="color:white; text-decoration:none;">CERRAR SESIÓN</button>
+                </li>
+                </form>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a></li>
+            </div>
         </div>
-    </div>
-</nav>
+        {%endif%}
+    </nav>
+    <br>
+    <br>
+    <br>
 
 <!-- FILTROS -->
 <div class="filtros mt-5 mb-4 container">

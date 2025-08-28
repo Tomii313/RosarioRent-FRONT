@@ -13,18 +13,22 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" />
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <style>
+        .navbar-brand{
+            color:black;
+            background-color:black;
+        }
+    </style>
 </head>
 <body id="page-top">
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <!-- tu navbar acá -->
-    </nav>
 
+    
     <!-- CONTENIDO VARIABLE -->
     {% block content %}<body id="page-top">
     <!-- Navigation-->
      
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+   <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar2" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="#page-top"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,19 +37,32 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="{%url 'home' %}" style="color:black; margin-left: 30px;" >Inicio</a></li>
-                 
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Inicio</a></li>
                     <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:black">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Alquileres </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li class="nav-item"><a class="nav-link" href="{%url 'departamentos'%}" style="color:gray;">Departamentos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" style="color:gray;">Oficinas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{%url 'salones' %}" style="color:gray;">Salones</a></li>
-                    
+                    <li class="nav-item"><a class="nav-link" href="{%url 'oficinas'%}" style="color:gray;">Oficinas</a></li>
+                     <li class="nav-item"><a class="nav-link" href="{%url 'salones'%}" style="color:gray;">Salones</a></li>
                 </ul>
                 </li>
-            </nav>
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <li class="nav-item">
+                    <button type="submit" class="nav-link btn btn-link" style="color:white; text-decoration:none;">CERRAR SESIÓN</button>
+                </li>
+                </form>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a></li>
+            </div>
+        </div>
+        {%endif%}
+    </nav>
+    <br>
+    <br>
+    <br>
                <div class="filtros mt-5 mb-4 container">
     <form method="get" class="row gy-2 gx-3 align-items-center p-4 filtro-box shadow">
         <div class="col-sm-3">
@@ -117,16 +134,23 @@
  <div class="container mt-5">
   <div class="row">
       {% for departamento in departamentos %}
+    
     <div class="col-md-3 mb-4">
       <div class="card" style="width: 18rem;">
        <div id="carouselDepartamento{{ departamento.id }}" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
+  {% if departamento.imagenes.all %}
     {% for imagen in departamento.imagenes.all %}
       <div class="carousel-item {% if forloop.first %}active{% endif %}">
         <img src="{{ imagen.imagen.url }}" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="Imagen del departamento">
       </div>
     {% endfor %}
-  </div>
+  {% else %}
+    <div class="carousel-item active">
+      <img src="{% static 'assets/default.jpg' %}" class="d-block w-100" style="height: 200px; object-fit: cover;" alt="Imagen por defecto">
+    </div>
+  {% endif %}
+</div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselDepartamento{{ departamento.id }}" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Anterior</span>

@@ -2,14 +2,103 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>Publicar nuevo departamento</h2>
-    <form method="POST" enctype="multipart/form-data">
+<div class="form-container">
+    <br>
+    <img src="{% static 'assets/logowhite.png' %}" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px; border-radius:8px;">
+    <h2 class="text-center text-white mb-4">Publicar nuevo departamento</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="form-box p-4 rounded shadow">
         {% csrf_token %}
-        {{ form.as_p }}
-        <label>Fotos del departamento</label>
-        <input type="file" name="imagenes" multiple class="form-control mb-3">
-        <button type="submit" class="btn btn-primary">Publicar</button>
+        <div class="d-flex flex-column align-items-center">
+            <div class="mb-3 w-75">
+                <label class="form-label">Propietario</label>
+                {{ form.nombre }}
+            </div>
+            <div class="mb-3 w-75">
+                <label class="form-label">Dirección</label>
+                {{ form.direccion }}
+            </div>
+            <div class="mb-3 w-75">
+                <label class="form-label">Precio</label>
+                {{ form.precio }}
+            </div>
+            <div class="mb-3 w-75">
+                <label class="form-label">Habitaciones</label>
+                {{ form.habitaciones }}
+                {{ form.habitaciones.errors }}
+            </div>
+            <div class="mb-3 w-75">
+                <label class="form-label">Baños</label>
+                {{ form.banos }}
+            </div>
+            <div class="mb-3 w-75">
+                <label class="form-label">Piso</label>
+                {{ form.piso }}
+                {{ form.piso.errors }}
+            </div>
+            <div class="mb-3 w-75">
+                <label class="form-label">Departamento</label>
+                {{ form.departamento }}
+            </div>
+            <div class="mb-3 w-75">
+                <label class="form-label">Zona</label>
+                {{ form.zona }}
+            </div>
+            <div class="mb-3 w-75">
+                <label class="form-label">Descripción</label>
+                {{ form.descripcion }}
+            </div>
+            <div class="mb-2 w-75 text-center">
+                <label class="form-label">Fotos del departamento</label>
+                <input type="file" name="imagenes" multiple class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary w-50 mt-3">Publicar</button>
+        </div>
     </form>
 </div>
+
+<style>
+    /* Fondo con imagen fachera */
+    body {
+        background: url("https://images.unsplash.com/photo-1505843513577-22bb7d21e455") no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+    }
+
+    /* Oscurecer fondo */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 0;
+    }
+
+    /* Caja del formulario */
+    .form-container {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        justify-content: center;
+    }
+
+    .form-box {
+        background: rgba(255,255,255,0.9);
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .errorlist {
+        color: red;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
 {% endblock %}
