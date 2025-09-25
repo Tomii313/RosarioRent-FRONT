@@ -5795,6 +5795,7 @@ textarea.form-control-lg {
   display: none;
 }
 
+
 .popover-body {
   padding: var(--bs-popover-body-padding-y) var(--bs-popover-body-padding-x);
   color: var(--bs-popover-body-color);
@@ -10978,106 +10979,238 @@ header.masthead {
   background-position: center center;
   background-size: cover;
 }
+/* ----------------- FONDO ----------------- */
 .fondoautenticacion {
-  margin: 0;
+    min-height: 100vh;
+    width: 100vw;
+    background-image: url("../assets/img/rosario2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* ----------------- FORMULARIO ----------------- */
+.fondoautenticacion .login-container {
+    background-color: rgba(0, 0, 0, 0.65);
+    border-radius: 15px;
+    padding: 40px 30px;
+    max-width: 480px;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;      /* TODOS los hijos ocupan todo el ancho */
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* ----------------- TITULO ----------------- */
+.fondoautenticacion .login-container h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 25px;
+    color: #ffffff;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+}
+
+.errorlist {
+  color: white !important;
+  list-style: none;  /* saca los puntitos */
   padding: 0;
-  background-image: url("../assets/img/rosario2.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-
+  margin: 5px 0;
+  font-size: 14px;
+  text-align: center;  /* opcional, para centrar */
+  margin: 10px;
+}
+/* ----------------- LABELS ----------------- */
+.fondoautenticacion .login-container label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: white;
+    font-weight: bold;
 }
 
-.fondoinformacion{
-  background-image: url("../assets/img/rosario2.jpg");
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-  height: 100vh;
-  width: 100vh;
-  display:flex;
-  margin:0;
-  padding:0;
-}
-.logo{
-  width:230px;
-  border-radius:30px;
-  margin-bottom:40px;
-  border:3px solid #fff4cc; 
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  cursor:pointer;
-  margin: 50px auto 30px auto;
-}
-
-.logo:hover{
-content:url("/static/assets/LogoWhite.png");
-transform: scale(1.05);
-}
-.login-container{
- background-color: rgba(0, 0, 0, 0.03);
- width:500px;
- border-radius: 50px;
- margin: 0 auto;
- text-align:center;
-}
-
-
-
-.botonauth .btn{
-border-radius: 10px;
-transition: transform 0.3s ease, background-color 0.3s ease;
-}
-.botonauth .btn:hover {
-  transform: scale(1.05);
-  background-color: rgba(255, 200, 0, 0.8);
-}
-.form-auth {
-  background-color: rgba(0, 0, 0, 0.6);
+.fondoautenticacion .login-container select.form-control {
+  background-color: #f0f0f0;
+  border: 2px solid #28a745;
   border-radius: 10px;
-  padding: 30px;
+  padding: 0 12px;          /* 🔥 padding lateral solamente */
+  font-size: 16px;
+  line-height: normal;      /* 🔥 deja que el navegador ajuste */
+  color: #333;
+  outline: none;
+  width: 100%;
+  min-height: 45px;         /* 🔥 asegura que haya espacio vertical */
+  box-sizing: border-box;
+  text-align-last: center;
+}
+/* ----------------- FOCUS ----------------- */
+.fondoautenticacion .login-container input.form-control:focus,
+.fondoautenticacion .login-container select.form-control:focus {
+    border: 2px solid #00d1b2;
+    box-shadow: 0 0 8px rgba(0,209,178,0.5);
 }
 
-.form-auth p{
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* centra los hijos del <p> */
-  margin-bottom: 20px;
-}
-.form-auth label{
-  margin-bottom:10px;
-  font-weight: bold;
+/* ----------------- SELECT ----------------- */
+.fondoautenticacion .login-container select.form-control {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-align-last: center;  /* centra el texto de la opción */
+    background-color: #f7f7f7;
+    height: 42px;  
+    padding-right: 10px;
 }
 
+/* ----------------- BOTÓN ----------------- */
+.fondoautenticacion .botonauth button {
+    width: 100%;
+    padding: 12px;
+    background-color: #00d1b2;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 10px;
+}
+
+.fondoautenticacion .botonauth button:hover {
+    background-color: #00b39f;
+    transform: scale(1.03);
+}
+
+/* ----------------- LINKS ----------------- */
+.fondoautenticacion .textlogin {
+    font-size: 0.88rem;
+    margin-top: 15px;
+    text-align: center;
+    width: 100%;  /* coincide con inputs y botón */
+}
+
+.fondoautenticacion .textlogin a {
+    color: white;
+    text-decoration: none;
+}
+
+.fondoautenticacion .textlogin a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* ----------------- FORMULARIO INTERNO ----------------- */
+.form-auth {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;   /* TODOS los hijos se estiran al mismo ancho */
+}
+
+/* Ajuste de párrafos internos */
 .form-auth p {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ----------------- OCULTAR SCROLLBAR ----------------- */
+.fondoautenticacion .login-container::-webkit-scrollbar {
+    display: none;
+}
+.fondoautenticacion .login-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* contenedor */
+.nav-user-dropdown {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* botón-ícono */
+.nav-user-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 6px 8px;
+  margin: 0 8px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* estilo del menú */
+.nav-user-menu {
+  display: none; /* se muestra con la clase .open */
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  background-color: #262626;
+  border-radius: 8px;
+  min-width: 160px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  padding: 6px 0;
+  z-index: 2000;
+  list-style: none;
+  margin: 0;
+}
+
+/* items */
+.nav-user-menu li {
+  margin: 0;
+}
+
+.nav-user-menu a,
+.nav-user-menu .logout-btn {
+  display: block;
+  padding: 10px 14px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  background: none;
+  border: none;
   text-align: left;
-  margin-bottom:50px;
-}
-.textlogin{
-font-size: 0.85rem;
-margin-top: 15px;
-text-align:center;
-padding-bottom:10px;
-
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
+.nav-user-menu a:hover,
+.nav-user-menu .logout-btn:hover {
+  background-color: #5c5d5e70;
+  color: white;
+  border-radius: 6px;
+}
 
-.form-auth input.form-control {
-  padding: 6px 10px;     /* achica el alto */
-  font-size: 0.85rem;    /* achica el texto */
-  height: auto;          /* asegurate que no tenga un alto fijo raro */
-  width:250px;
-  margin: 0 auto;
-  display:block;
-  
+/* mostrar cuando la caja tenga la clase open */
+.nav-user-dropdown.open .nav-user-menu {
+  display: block;
+}
+
+/* botón cerrar sesión dentro del menu */
+.logout-btn {
+  background: none;
+  color: white;
+  border: none;
+  font-weight: 600;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+/* adaptaciones móviles */
+@media (max-width: 600px) {
+  .nav-user-menu { right: 6px; left: auto; min-width: 140px; }
 }
 header.masthead .masthead-subheading {
   font-size: 1.5rem;

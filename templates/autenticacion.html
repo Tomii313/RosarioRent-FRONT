@@ -13,37 +13,62 @@
 </head>
 <body>
     <style>
-select.form-control {
-  background-color: #f0f0f0;
-  border: 2px solid #28a745;
-  border-radius: 13px;
-  padding: 8px 12px;
-  font-size: 16px;
-  color: #333;
-  outline: none;
-  width: 260px;
-  justify-content:center;
-  text-align:center;
-  margin-left: 90px;
-
+input#id_dni, input#id_num_calle{
+  max-width:100%;
 }
 
+.login-container{
+  max-width:1000px;
+  margin:auto !important;
+}
 
 </style>
     <div class="fondoautenticacion">
-        <img src="{% static 'assets/logoauth.png' %}" alt="Logo RosarioRent" class="logo">
         <div class="login-container">
 
             <form method="post" action="" class="form-auth">
                 <h1>Registrarse</h1>
                 <br><br>
                 {% csrf_token %}
-                {{ form }}
+                <div class="row">
+                  <div class="col-md-6">{{form.email.label_tag}}{{form.email}}{{form.email.errors}}</div>
+                  <div class="col-md-6">{{form.username.label_tag}}{{form.username}}{{form.username.errors}}</div>
+                  </div>
+                <div class="row mt-3">
+                        <div class="col-md-6">{{form.nombre.label_tag}}{{form.nombre}}{{form.nombre.errors}}</div>
+                        <div class="col-md-6">{{form.apellido.label_tag}}{{form.apellido}}{{form.apellido.errors}}</div>
+                        
+                         </div>
+                <div class="row mt-3">
+                   <div class="col-md-6">{{form.dni.label_tag}}{{form.dni}}{{form.dni.errors}}</div>
+                   <div class="col-md-6">{{form.nacimiento.label_tag}}{{form.nacimiento}}{{form.nacimiento.errors}}</div>
+
+                  </div>
+                  
+                  <div class="row mt-3">
+                  <div class="col-md-6">{{form.direccion.label_tag}}{{form.direccion}}{{form.direccion.errors}}</div>
+                  <div class="col-md-6">{{form.num_calle.label_tag}}{{form.num_calle}}{{form.num_calle.errors}}</div>
+                   </div>
+                  
+                  <div class="row mt-3">
+                  <div class="col-md-6">{{form.telefono.label_tag}}{{form.telefono}}{{form.telefono.errors}}</div>
+                  <div class="col-md-6">{{form.tipo.label_tag}}{{form.tipo}}{{form.tipo.errors}}</div>
+                  </div>
+                  <div class="row mt-3">
+                   <div class="col-md-6">{{form.password1.label_tag}}{{ form.password1 }}{{form.password1.errors}}</div>
+                 <div class="col-md-6">{{form.password2.label_tag}}{{ form.password2 }}{{form.password2.errors}}</div>
+                 </div>
+                 
+                  <div class="row">
+        <div class="col-md-6">{{form.tipo_publicacion.label_tag}}{{form.tipo_publicacion}}{{form.tipo_publicacion.errors}}</div>
+                  </div>
+                   
+                  
                 <br>
                 <div class="botonauth">
                     <button type="submit" class="btn btn-success" value="Iniciar Sesión">Registrarse</button>
                 </div>
-                <p class="textlogin">¿Ya tenés una cuenta? <a href="{% url 'login' %}">Iniciar sesión</a></p>
+                <p class="textlogin" style="color:white;">¿Ya tenés una cuenta? <a href="{% url 'login' %}">Iniciar sesión</a></p>
                         <p style="text-align: center; margin-top: 20px;">
     <a href="{% url 'home' %}" style="color: white; text-decoration: none;">Iniciar sesión como invitado</a>
 </p>
@@ -54,4 +79,38 @@ select.form-control {
     </div>
  
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const tipoUsuario = document.getElementById("id_tipo");
+  const tipoPublicacion = document.getElementById("id_tipo_publicacion");
+  const labelPublicacion = document.querySelector("label[for='id_tipo_publicacion']");
+
+  function showTipoPublicacion(show) {
+    [tipoPublicacion, labelPublicacion].forEach(el => {
+      if (el) el.style.display = show ? "" : "none";
+    });
+  }
+
+  function setFirstValidIfEmpty() {
+    if (!tipoPublicacion.value) {
+      const firstValid = Array.from(tipoPublicacion.options).find(o => o.value);
+      if (firstValid) firstValid.selected = true;  // evita el “blanco”
+    }
+  }
+
+  function togglePublicacion() {
+    if (tipoUsuario.value === "propietario") {
+      showTipoPublicacion(true);
+      setFirstValidIfEmpty();
+    } else {
+      tipoPublicacion.value = "";   // limpiamos si no es propietario
+      showTipoPublicacion(false);
+    }
+  }
+
+  tipoUsuario.addEventListener("change", togglePublicacion);
+  togglePublicacion(); // estado inicial correcto
+});
+</script>
+
 </html>
