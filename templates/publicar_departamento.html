@@ -244,4 +244,32 @@ body {
     font-size: 0.9rem;
 }
 </style>
+<script>
+  // crear mapa centrado en Rosario
+  var map = L.map('map').setView([-32.9442, -60.6505], 13); 
+
+  // capa base OSM
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var marker;
+
+  // al hacer clic en el mapa
+  map.on('click', function(e) {
+      var lat = e.latlng.lat;
+      var lng = e.latlng.lng;
+
+      // si ya hay marcador, lo movemos
+      if (marker) {
+          marker.setLatLng(e.latlng);
+      } else {
+          marker = L.marker(e.latlng).addTo(map);
+      }
+
+      // guardar en los inputs ocultos
+      document.getElementById('id_latitud').value = lat;
+      document.getElementById('id_longitud').value = lng;
+  });
+</script>
 {% endblock %}

@@ -11017,13 +11017,18 @@ header.masthead {
 }
 
 .errorlist {
-  color: white !important;
-  list-style: none;  /* saca los puntitos */
-  padding: 0;
-  margin: 5px 0;
-  font-size: 14px;
-  text-align: center;  /* opcional, para centrar */
-  margin: 10px;
+  color: #ff4d4d;         /* Rojo visible */
+  background: rgba(255, 0, 0, 0.05);
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-top: 4px;
+  font-weight: 600;
+  list-style: none;       /* saca los puntitos de la lista */
+}
+
+.errorlist li::before {
+  content: "⚠ ";
+  font-weight: bold;
 }
 /* ----------------- LABELS ----------------- */
 .fondoautenticacion .login-container label {

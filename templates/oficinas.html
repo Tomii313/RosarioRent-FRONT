@@ -155,7 +155,7 @@
     </div>
 </header>
 
-{% if user.is_authenticated and user.tipo == 'propietario' and user.tipo_publicacion == 'oficina'  %}
+{% if user.is_authenticated and user.tipo == 'propietario' and "oficina" in user.tipo_publicacion %}
     <center>
         <br>
         <a href="{% url 'publicar_oficina' %}" class="btn btn-success">Publicar nueva oficina</a>

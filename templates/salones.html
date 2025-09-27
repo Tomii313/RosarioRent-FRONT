@@ -162,7 +162,7 @@
  
 </header>
 
-{% if user.is_authenticated and user.tipo == 'propietario' and user.tipo_publicacion == 'salon' %}
+{% if user.is_authenticated and user.tipo == 'propietario' and "salon" in user.tipo_publicacion %}
     <center>
         <br>
         <a href="{% url 'publicar_salones' %}" class="btn btn-success">Publicar nuevo salón</a>

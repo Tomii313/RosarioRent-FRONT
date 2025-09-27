@@ -115,6 +115,16 @@ ease-in-out;
     padding-bottom: var(--bs-navbar-brand-padding-y);
     margin-right
 }
+.whatsapp-btn {
+    background: linear-gradient(135deg, #25D366, #1EBE57);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-btn:hover {
+    background: linear-gradient(135deg, #1EBE57, #25D366);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+    transform: translateY(-2px);
+}
     </style>
 </head>
 <body>
@@ -182,6 +192,7 @@ ease-in-out;
             <span>{{ oficina.ambientes }} ambientes</span>
         {% endif %}
     </div>
+    
                 {% if request.user == oficina.propietario %}
      <button type="button" class="btn btn-danger" id="btneliminar"><i class="fa-solid fa-trash"></i> Eliminar publicación</button>
     
@@ -191,19 +202,33 @@ ease-in-out;
    
     </form>
      {%endif%}
-            {%if user.is_authenticated%}
-                <form action="{% url 'contactar_propietario' oficina.id %}" method="post" class="mt-4">
-                    {% csrf_token %}
-                    <button class="btn-contactar">
-                        <i class="fa-regular fa-envelope"></i> Contactar
-                    </button>
-                    
-                </form>
-                {%else%}
-                <button class="btn-contactar" disabled>
-                        <i class="fa-regular fa-envelope"></i> Debe estar autenticado para contactarse
-                    </button>
-                {%endif%}
+     
+     <div class="d-flex flex-wrap gap-3 mt-4">
+    {% if user.is_authenticated %}
+        <!-- Botón Contactar por email -->
+        <form action="{% url 'contactar_propietario' oficina.id %}" method="post" class="m-0 p-0">
+            {% csrf_token %}
+            <button class="btn-contactar">
+                <i class="fa-regular fa-envelope"></i> Contactar
+            </button>
+        </form>
+
+        <!-- Botón WhatsApp -->
+        {% with msg="Hola, estoy interesado en tu propiedad de: "|add:oficina.direccion %}
+        <a class="btn-contactar whatsapp-btn"
+           href="https://wa.me/{{ oficina.propietario.telefono|urlencode }}?text={{ msg|urlencode }}"
+           target="_blank">
+           <i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp
+        </a>
+        {% endwith %}
+    {% else %}
+        <!-- Botón deshabilitado si no está autenticado -->
+        <button class="btn-contactar" disabled>
+            <i class="fa-regular fa-envelope"></i> Debe estar autenticado para contactarse
+        </button>
+    {% endif %}
+</div>
+        
                 <br>
                 <br>
            
