@@ -17,6 +17,8 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui-theme-default.css">
 </head>
 <body id="page-top">
     <!-- Navigation-->
@@ -64,7 +66,6 @@
         <li class="nav-item">
           <a class="nav-link nav-link-fachero" href="#contact">Contacto</a>
         </li>
-
         {% if user.is_authenticated %}
         <div class="nav-user-dropdown" id="navUserDropdown">
           <button id="navUserBtn" class="nav-user-btn" aria-haspopup="true" aria-expanded="false" type="button">
@@ -73,6 +74,7 @@
           <ul id="navUserMenu" class="nav-user-menu" role="menu" aria-labelledby="navUserBtn">
             <li role="none"><a role="menuitem" href="{% url 'cuenta' %}">Cuenta</a></li>
             <li role="none"><a role="menuitem" href="{% url 'favoritos' %}">Mis Favoritos</a></li>
+          
             <li role="none">
               <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
@@ -82,7 +84,16 @@
           </ul>
         </div>
         {% else %}
-        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a></li>
+        <div class="nav-user-dropdown" id="navUserDropdown">
+          <button id="navUserBtn" class="nav-user-btn" aria-haspopup="true" aria-expanded="false" type="button">
+            <i class="fas fa-user"></i>
+          </button>
+          <ul id="navUserMenu" class="nav-user-menu" role="menu" aria-labelledby="navUserBtn">
+            <li role="none">
+              <a href="{% url 'login' %}">Iniciar Sesión</a>
+            </li>
+          </ul>
+        </div>
         {% endif %}
       </ul>
     </div>
@@ -91,6 +102,11 @@
 <br>
 <br>
 <br>
+ <!-- Contenedor del chatbot -->
+  
+
+
+</div>
 
     <!-- Masthead-->
     <header class="masthead">
@@ -102,13 +118,15 @@
         </div>
     </header>
     {%block content%}
-{%if messages %}
- {% for message in messages %}
- <div class="alert alert-success text-center" role="alert">
-    {{ message }}
- </div>
- {% endfor %}
- {% endif %}
+        {% if messages %}
+<div class="alert alert-success" style="text-align:center">
+  {%for message in messages%}
+  {{message}}
+  {%endfor%}
+</div>
+{%endif%} 
+
+ 
     <!-- Services-->
     <section class="page-section" id="services">
         <div class="container">
@@ -174,7 +192,7 @@
 
 <!-- Contact-->
 <section class="page-section" id="contact">
-    <div class="container">
+    <div class="container" style="animation: fadeIn 0.7s ease-in-out;">
         <div class="text-center">
             <h2 class="section-heading text-uppercase">Contactenos</h2>
             <h3 class="section-subheading text-muted">Rellene el formulario y su mensaje sera respondido a la brevedad.</h3>
@@ -234,12 +252,25 @@
             </div>
             <div class="col-lg-4 text-lg-end">
                 <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
-                <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                <a class="link-dark text-decoration-none" href="#!">Terminos y Condiciones</a>
             </div>
         </div>
     </div>
 </footer>
-              
+
+
+<button id="toggle-chat" class="toggle-chat-btn">
+  💬
+</button>
+
+<div class="chat-container" id="chat-container">
+  <div class="chat-header">Chat de Soporte</div>
+  <div class="chat-box" id="chat-box"></div>
+  <form id="chat-form">
+      <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." autocomplete="off" required>
+      <button type="submit">Enviar</button>
+  </form>
+</div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
@@ -248,8 +279,110 @@
         <!-- * *                               SB Forms JS                               * *-->
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+         <!-- Vue (requerido por BotUI) -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<!-- BotUI JS -->
+<script src="https://cdn.jsdelivr.net/npm/botui/build/botui.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+   $(document).ready(function() {
+    const chatBox = $('#chat-box');
+    const chatInput = $('#chat-input');
+    const chatForm = $('#chat-form');
+
+    // 👉 Mostrar el mensaje inicial SOLO al cargar
+    chatBox.append('<div class="bot-message"><strong>Bot:</strong> {{ mensajeinicial|safe }}</div>');
+
+    chatForm.submit(function(event) {
+        event.preventDefault();
+
+        const userMessage = chatInput.val().trim();
+        if (userMessage) {
+            chatBox.append('<div class="user-message"><strong>Tú:</strong> ' + userMessage + '</div>');
+
+            $.ajax({
+                url: '{% url "chatbot" %}',
+                method: 'POST',
+                data: {
+                    'message': userMessage,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    chatBox.append('<div class="bot-message"><strong>Bot:</strong> ' + data.response + '</div>');
+                    chatInput.val('');
+                    chatBox.scrollTop(chatBox[0].scrollHeight);
+                }
+            });
+        }
+    });
+});
+</script>
+
 <!-- Custom CSS -->
 <style>
+  .chat-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 320px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+         overflow: hidden;
+    }
+    .toggle-chat-btn {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+.chat-container.hidden {
+  display: none;
+}
+
+    .chat-header {
+        background: #007bff;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .chat-box {
+        height: 250px;
+        overflow-y: auto;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-message, .bot-message {
+        padding: 5px 10px;
+        margin: 5px;
+        border-radius: 5px;
+        max-width: 80%;
+    }
+
+    .user-message {
+        background: #007bff;
+        color: white;
+        align-self: flex-end;
+    }
+
+    .bot-message {
+        background: #f1f1f1;
+        align-self: flex-start;
+    }
 .navbar-nav .nav-link {
     color: #f8f9fa !important;
     transition: color 0.3s ease;
@@ -290,8 +423,23 @@
 .nav-user-dropdown.open .nav-user-menu {
     display: block;
 }
+
 </style>
+
     </body>
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const toggleBtn = document.getElementById('toggle-chat');
+  const chatContainer = document.getElementById('chat-container');
+
+  // El chat empieza minimizado
+  chatContainer.classList.add('hidden');
+
+  toggleBtn.addEventListener('click', function() {
+    chatContainer.classList.toggle('hidden');
+  });
+});
+</script>
     <script>
 document.addEventListener('DOMContentLoaded', function () {
   const dropdown = document.getElementById('navUserDropdown');

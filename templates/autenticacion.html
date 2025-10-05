@@ -109,6 +109,21 @@
       from {opacity: 0; transform: translateY(20px);}
       to {opacity: 1; transform: translateY(0);}
     }
+  #tipoPublicacionRow ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#tipoPublicacionRow li {
+    display: block; /* uno debajo del otro */
+    margin-bottom: 10px;
+}
+
+#tipoPublicacionRow li input[type="checkbox"] {
+    margin-right: 8px;
+    vertical-align: middle;
+}
   </style>
 </head>
 <body>
@@ -138,10 +153,22 @@
         <div class="col-md-3">{{form.password2.label_tag}}{{ form.password2 }}{{form.password2.errors}}</div>
       </div>
 
-      <div class="row">
-        <div class="col-md-3">{{form.tipo_publicacion.label_tag}}{{form.tipo_publicacion}}{{form.tipo_publicacion.errors}}</div>
-      </div>
-
+    
+<div class="row" id="tipoPublicacionRow" style="display:none;">
+    <div class="col-12">
+        <label>{{ form.tipo_publicacion.label }}</label>
+        <div class="d-flex flex-wrap gap-3">
+            {% for checkbox in form.tipo_publicacion %}
+                <div class="form-check">
+                    {{ checkbox.tag }}
+                    <label class="form-check-label">{{ checkbox.choice_label }}</label>
+                </div>
+            {% endfor %}
+        </div>
+        {{ form.tipo_publicacion.errors }}
+    </div>
+</div>
+     
       <br>
       <button type="submit" class="btn btn-success">Registrarse</button>
 
@@ -151,39 +178,26 @@
   </div>
 
   <script>
-  document.addEventListener("DOMContentLoaded", function() {
+
+document.addEventListener("DOMContentLoaded", function() {
     const tipoUsuario = document.getElementById("id_tipo");
-    const tipoPublicacion = document.getElementById("id_tipo_publicacion");
-    const labelPublicacion = document.querySelector("label[for='id_tipo_publicacion']");
-
-    function showTipoPublicacion(show) {
-      [tipoPublicacion, labelPublicacion].forEach(el => {
-        if (el) el.style.display = show ? "" : "none";
-      });
-    }
-
-    function setFirstValidIfEmpty() {
-      if (!tipoPublicacion.value) {
-        const firstValid = Array.from(tipoPublicacion.options).find(o => o.value);
-        if (firstValid) firstValid.selected = true;
-      }
-    }
+    const tipoPublicacionRow = document.getElementById('tipoPublicacionRow');
 
     function togglePublicacion() {
-      if (tipoUsuario.value === "propietario") {
-        showTipoPublicacion(true);
-        setFirstValidIfEmpty();
-      } else {
-        tipoPublicacion.value = "";
-        showTipoPublicacion(false);
-      }
+        if (tipoUsuario.value === "propietario") {
+            tipoPublicacionRow.style.display = "";
+        } else {
+            tipoPublicacionRow.style.display = "none";
+        }
     }
 
-    if (tipoUsuario) {
-      tipoUsuario.addEventListener("change", togglePublicacion);
-      togglePublicacion();
-    }
-  });
+    // Ejecuta al cambiar el select
+    tipoUsuario.addEventListener("change", togglePublicacion);
+
+    // Ejecuta al cargar la página (por si ya viene seleccionado)
+    togglePublicacion();
+});
+
   </script>
 </body>
 </html>

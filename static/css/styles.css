@@ -5827,6 +5827,14 @@ textarea.form-control-lg {
   content: "";
 }
 
+.descripcion-box {
+    max-width: 100%;          /* que nunca exceda su columna */
+    word-wrap: break-word;    /* parte las palabras largas */
+    overflow-wrap: break-word;/* lo mismo para navegadores nuevos */
+    line-height: 1.5;
+    white-space: pre-line;    /* mantiene saltos de línea */
+}
+
 .carousel-item {
   position: relative;
   display: none;
@@ -11015,6 +11023,8 @@ header.masthead {
     color: #ffffff;
     text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 }
+
+
 
 .errorlist {
   color: #ff4d4d;         /* Rojo visible */

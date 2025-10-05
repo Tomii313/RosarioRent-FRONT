@@ -78,6 +78,7 @@
             transform: scale(1.05);
         }
 
+
         
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -129,18 +130,23 @@
                 <tr>
                     <td>{{ favorito.publicacion }}</td>
                     <td>
-                        {% if favorito.content_type.model == "oficina" %}
-                            <a href="{% url 'oficina_informacion' favorito.publicacion.id %}" class="btn btn-primary btn-sm">Ir a la oficina</a>
-                        {% elif favorito.content_type.model == "departamentos" %}
-                            <a href="{% url 'departamentos_informacion' favorito.publicacion.id %}" class="btn btn-primary btn-sm">Ir al departamento</a>
-                        {% elif favorito.content_type.model == "salones" %}
-                            <a href="{% url 'salones_informacion' favorito.publicacion.id %}" class="btn btn-primary btn-sm">Ir al salón</a>
-                        {% endif %}
-                    </td>
+    {% if favorito.publicacion.id %}
+        {% if favorito.content_type.model == "oficina" %}
+            <a href="{% url 'oficina_informacion' favorito.publicacion.id %}" class="btn btn-primary btn-sm">Ir a la oficina</a>
+        {% elif favorito.content_type.model == "departamentos" %}
+            <a href="{% url 'departamentos_informacion' favorito.publicacion.id %}" class="btn btn-primary btn-sm">Ir al departamento</a>
+        {% elif favorito.content_type.model == "salones" %}
+            <a href="{% url 'salones_informacion' favorito.publicacion.id %}" class="btn btn-primary btn-sm">Ir al salón</a>
+        {% endif %}
+    {% else %}
+        <span class="text-muted">Publicación Eliminada</span>
+    {% endif %}
+    
+</td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="2" class="text-center">No tenés favoritos todavía.</td>
+                    <td colspan="2" class="text-center">En esta sección se mostrarán tus publicaciones favoritas.</td>
                 </tr>
                 {% endfor %}
             </tbody>
