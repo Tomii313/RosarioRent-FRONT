@@ -307,24 +307,29 @@ ease-in-out;
 
         <div class="mt-5">
            <hr class="my-4">
+<hr class="my-4">
 <h3>Comentarios</h3>
 
 {% for comentario in comentarios %}
   {% if not comentario.parent %}
-    <div class="border rounded p-3 mb-3 bg-light text-dark">
-      <strong>{{ comentario.usuario.username }}</strong>
+    <!-- COMENTARIO PRINCIPAL -->
+    <div class="mb-3 p-2 rounded bg-dark bg-opacity-25">
+      <div class="d-flex align-items-center mb-2">
+        <img src="{% if comentario.usuario.avatar %}{{ comentario.usuario.avatar.url }}{% else %}{% static 'avatars/default_avatar.png' %}{% endif %}"
+             alt="Avatar"
+             class="rounded-circle me-2"
+             style="width:40px; height:40px; object-fit:cover;">
+        <strong>{{ comentario.usuario.nombre }} {{ comentario.usuario.apellido }}</strong>
+      </div>
+
       <p class="mb-1">{{ comentario.texto }}</p>
       <small class="text-muted">{{ comentario.creado|date:"d M Y H:i" }}</small>
 
       {% if request.user == comentario.usuario %}
-        <a href="{% url 'editarcomentario' comentario.id %}" 
-           class="btn btn-sm btn-warning ms-3">
-           <i class="fa-solid fa-pen-to-square"></i>
+        <a href="{% url 'editarcomentario' comentario.id %}" class="btn btn-sm btn-warning ms-3">
+          <i class="fa-solid fa-pen-to-square"></i>
         </a>
-
-        <form action="{% url 'eliminarcomentario' comentario.id %}" 
-              method="post" 
-              class="d-inline formcomentario">
+        <form action="{% url 'eliminarcomentario' comentario.id %}" method="post" class="d-inline formcomentario">
           {% csrf_token %}
           <button type="button" class="btn btn-sm btn-danger btn-eliminar ms-1">
             <i class="fa-solid fa-trash-can"></i>
@@ -338,6 +343,7 @@ ease-in-out;
           Responder
         </button>
 
+        <!-- FORM DE RESPUESTA -->
         <form id="reply-{{comentario.id}}" class="d-none mt-2" method="post">
           {% csrf_token %}
           <textarea name="texto" class="form-control" rows="2" required></textarea>
@@ -346,9 +352,16 @@ ease-in-out;
         </form>
       {% endif %}
 
+      <!-- RESPUESTAS -->
       {% for respuesta in comentario.respuestas.all %}
-        <div class="ms-4 mt-3 p-2 border-start border-2 border-primary bg-white rounded">
-          <strong>{{ respuesta.usuario.username }}</strong>
+        <div class="mt-3 ms-5 p-2 rounded bg-secondary bg-opacity-25">
+          <div class="d-flex align-items-center mb-2">
+            <img src="{% if respuesta.usuario.avatar %}{{ respuesta.usuario.avatar.url }}{% else %}{% static 'avatars/default_avatar.png' %}{% endif %}"
+                 alt="Avatar"
+                 class="rounded-circle me-2"
+                 style="width:35px; height:35px; object-fit:cover;">
+            <strong>{{ respuesta.usuario.nombre }} {{ respuesta.usuario.apellido }}</strong>
+          </div>
           <p class="mb-1">{{ respuesta.texto }}</p>
           <small class="text-muted">{{ respuesta.creado|date:"d M Y H:i" }}</small>
         </div>
