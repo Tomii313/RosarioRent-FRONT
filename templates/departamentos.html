@@ -151,6 +151,7 @@
             <li><a class="dropdown-item" href="{% url 'salones' %}">Salones</a></li>
           </ul>
         </li>
+         
 
 
         {% if user.is_authenticated %}
@@ -169,6 +170,11 @@
             </li>
           </ul>
         </div>
+         {% if user.is_authenticated and user.tipo == 'propietario' and "departamento" in user.tipo_publicacion %}
+  
+        
+    <a href="{% url 'publicar_departamento' %}" class="btn btn-success">Publicar nuevo departamento</a>
+{% endif %}
         {% else %}
         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a></li>
         {% endif %}
@@ -224,32 +230,66 @@
         <label class="form-label">Zona</label>
         <select name="zona" class="form-control">
     <option value="">Todas</option>
-    <option value="Centro">Centro</option>
-    <option value="Macrocentro">Macrocentro</option>
-    <option value="Echesortu">Echesortu</option>
-    <option value="Abasto">Abasto</option>
-    <option value="Martin">Martin</option>
-    <option value="Tablada">Tablada</option>
-    <option value="Las Delicias">Las Delicias</option>
-    <option value="Fisherton">Fisherton</option>
-    <option value="Arroyito">Arroyito</option>
-    <option value="Pichincha">Pichincha</option>
-    <option value="Norte">Zona Norte</option>
-    <option value="Sur">Zona Sur</option>
-    <option value="Oeste">Zona Oeste</option>
-    <option value="Este">Zona Este</option>
-    <option value="Suroeste">Zona Suroeste</option>
-    <option value="Sudeste">Zona Sudeste</option>
-    <option value="Villa Gobernador Gálvez">Villa Gobernador Gálvez</option>
-    <option value="Granadero Baigorria">Granadero Baigorria</option>
-    <option value="Ricardone">Ricardone</option>
-    <option value="San Lorenzo">San Lorenzo</option>
-    <option value="Fray Luis Beltrán">Fray Luis Beltrán</option>
-    <option value="Funes">Funes</option>
-    <option value="Roldán">Roldán</option>
-    <option value="Soldini">Soldini</option>
-    <option value="Pérez">Pérez</option>
-    <option value="Otro">Otro</option>
+    
+    <optgroup label="Zona Centro">
+      <option value="Centro">Centro</option>
+      <option value="Macrocentro">Macrocentro</option>
+      <option value="Echesortu">Echesortu</option>
+      <option value="Abasto">Abasto</option>
+      <option value="Pichincha">Pichincha</option>
+      <option value="Luis Agote">Luis Agote</option>
+      <option value="Refinería">Refinería</option>
+      <option value="Azcuénaga">Azcuénaga</option>
+      <option value="Martin">Martin</option>
+    </optgroup>
+
+    <optgroup label="Zona Norte">
+      <option value="Arroyito">Arroyito</option>
+      <option value="Alberdi">Alberdi</option>
+      <option value="La Florida">La Florida</option>
+      <option value="Empalme Graneros">Empalme Graneros</option>
+      <option value="Ludueña">Ludueña</option>
+      <option value="Barrio Rucci">Barrio Rucci</option>
+      <option value="Lisandro de la Torre">Lisandro de la Torre</option>
+    </optgroup>
+
+    <optgroup label="Zona Oeste">
+      <option value="Belgrano">Belgrano</option>
+      <option value="Godoy">Godoy</option>
+      <option value="7 de Septiembre">7 de Septiembre</option>
+      <option value="Fisherton">Fisherton</option>
+      <option value="Las Delicias">Las Delicias</option>
+      <option value="Hostal del Sol">Hostal del Sol</option>
+    </optgroup>
+
+    <optgroup label="Zona Sur">
+      <option value="Tablada">Tablada</option>
+      <option value="Hospitales">Hospitales</option>
+      <option value="Antártida Argentina">Antártida Argentina</option>
+      <option value="Lomas de Alberdi">Lomas de Alberdi</option>
+    </optgroup>
+
+    <optgroup label="Zona Metropolitana">
+      <option value="Villa Gobernador Gálvez">Villa Gobernador Gálvez</option>
+      <option value="Granadero Baigorria">Granadero Baigorria</option>
+      <option value="San Lorenzo">San Lorenzo</option>
+      <option value="Fray Luis Beltrán">Fray Luis Beltrán</option>
+      <option value="Ricardone">Ricardone</option>
+      <option value="Funes">Funes</option>
+      <option value="Roldán">Roldán</option>
+      <option value="Soldini">Soldini</option>
+      <option value="Perez">Pérez</option>
+    </optgroup>
+
+    <optgroup label="Otras zonas">
+      <option value="Zona Este">Zona Este</option>
+      <option value="Zona Oeste">Zona Oeste</option>
+      <option value="Zona Norte">Zona Norte</option>
+      <option value="Zona Sur">Zona Sur</option>
+      <option value="Zona Sudeste">Zona Sudeste</option>
+      <option value="Zona Suroeste">Zona Suroeste</option>
+      <option value="Otro">Otro</option>
+    </optgroup>
 </select>
       </div>
       <div class="col-6">
@@ -296,12 +336,8 @@
          
         </div>
     </header>
-    {% if user.is_authenticated and user.tipo == 'propietario' and "departamento" in user.tipo_publicacion %}
-    <center>
-        <br>
-    <a href="{% url 'publicar_departamento' %}" class="btn btn-success">Publicar nuevo departamento</a>
-{% endif %}
-  </center>
+  
+ 
  <div class="container mt-5">
   <div class="row">
       {% for departamento in departamentos %}

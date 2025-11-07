@@ -72,6 +72,11 @@
             </li>
           </ul>
         </div>
+        {% if user.is_authenticated and user.tipo == 'propietario' and "salon" in user.tipo_publicacion %}
+   
+        <a href="{% url 'publicar_salones' %}" class="btn btn-success">Publicar nuevo salón</a>
+  
+{% endif %}
         {% else %}
         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a></li>
         {% endif %}
@@ -196,12 +201,7 @@
  
 </header>
 
-{% if user.is_authenticated and user.tipo == 'propietario' and "salon" in user.tipo_publicacion %}
-    <center>
-        <br>
-        <a href="{% url 'publicar_salones' %}" class="btn btn-success">Publicar nuevo salón</a>
-    </center>
-{% endif %}
+
 
 <div class="container mt-5">
     <div class="row">

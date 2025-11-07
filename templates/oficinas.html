@@ -69,6 +69,11 @@
     </li>
   </ul>
 </div>
+{% if user.is_authenticated and user.tipo == 'propietario' and "oficina" in user.tipo_publicacion %}
+    
+        <a href="{% url 'publicar_oficina' %}" class="btn btn-success">Publicar nueva oficina</a>
+    
+{% endif %}
 {% else %}
 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a></li>
 {% endif %}
@@ -184,16 +189,10 @@
     <div class="container">
         <div class="masthead-heading text-uppercase">RosarioRent</div>
         <div class="masthead-subheading">Todo para alquilar, en un solo lugar.</div>
-        <a class="btn btn-primary btn-xl text-uppercase" href="#services">Ver más</a>
     </div>
 </header>
 
-{% if user.is_authenticated and user.tipo == 'propietario' and "oficina" in user.tipo_publicacion %}
-    <center>
-        <br>
-        <a href="{% url 'publicar_oficina' %}" class="btn btn-success">Publicar nueva oficina</a>
-    </center>
-{% endif %}
+
 
 <div class="container mt-5">
     <div class="row">
